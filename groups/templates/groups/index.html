@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Meus grupos</h3>
+<ul class='groups'>
+    {% for group in groups %}
+    <li><a href='{% url "group-detail" group.code %}'>{{ group }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

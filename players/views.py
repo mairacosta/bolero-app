@@ -1,4 +1,7 @@
 from django.shortcuts import render
 
-def index(request):
-    return render("Players view.")
+from django.contrib.auth import views
+
+
+class LoginView(views.LoginView):
+    template_name = 'login.html'

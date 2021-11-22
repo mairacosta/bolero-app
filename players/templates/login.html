@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block bodyclass %}text-center login-body{% endblock %}
+
+{% block navbar%}
+{% endblock %}
+
+{% block content %}
+  <main class="form-signin">
+    <form method="post" class="form">
+    {% csrf_token %}
+      <img class="mb-4" src="{% static 'logo-temporaria.png' %}" alt="" width="100" height="100">
+      <h1 class="h3 mb-3 fw-normal">Autentique-se</h1>
+  
+      <div class="form-floating">
+        <input class="form-control" id="floatingInput" name="username">
+        <label for="floatingInput">Nome de usuário</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" name="password">
+        <label for="floatingPassword">Senha</label>
+      </div>
+  
+      <div class="checkbox mb-3">
+        <a href="#">Registrar-se</a>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Logar</button>
+    </form>
+  </main>
+{% endblock %}

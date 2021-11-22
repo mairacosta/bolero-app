@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.views import logout_then_login
+from django.views.generic.base import RedirectView
+from players.views import LoginView
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/groups')),
     path('admin/', admin.site.urls),
     path('groups/', include('groups.urls')),
     path('players/', include('players.urls')),
+    path('login/', LoginView.as_view()),
+    path('logout/', logout_then_login, name='logout')
 ]
