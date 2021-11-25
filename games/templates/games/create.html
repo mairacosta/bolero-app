@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block content %}
+<h3>Criar partida</h3>
+<form method="post" class="form">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label" for="id_name">Nome</label>
+        <input type="text" name="name" maxlength="63" class="form-control" title="" required="" id="id_name">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="id_date_time">Date time</label>
+        <input type="datetime-local" name="date_time" class="form-control" title="" required="" id="id_date_time">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="id_local">Local da partida</label>
+        <input type="text" name="local" maxlength="255" class="form-control" title="" required="" id="id_local">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="id_max_players">Quantidade máxima de jogadores</label>
+        <input type="number" name="max_players" class="form-control" title="" required="" id="id_max_players">
+    </div>
+    {% buttons %}
+    <button class="btn btn-primary" type="submit">Salvar</button>
+    {% endbuttons %}
+</form>
+{% endblock %}

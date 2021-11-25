@@ -11,7 +11,7 @@
                 </li>
             </ul>
             <form class="d-flex">
-                <h5 class="header-name"><span class="badge">Maíra Costa</span></h5>
+                <h5 class="header-name"><span class="badge">{{request.user}}</span></h5>
 
                 <a class="btn btn-success btn-outline-light me-2" href="{% url 'group-create' %}">Criar grupo</a>
                 <a class="btn btn-outline-light me-2" href="{% url 'logout' %}">Sair</a>

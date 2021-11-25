@@ -29,3 +29,43 @@
     padding-bottom: 40px;
     background-color: #f5f5f5;
 }
+
+.bg-game {
+    background-color: #f4f4f4!important;
+}
+
+.group-card a {
+    text-decoration: none;
+    color: black;
+}
+
+.group-card {
+    padding: 0;
+}
+
+.group-search {
+    -webkit-box-shadow: 0px 0px 12px 6px rgba(48,48,48,0.14); 
+    box-shadow: 0px 0px 12px 6px rgba(48,48,48,0.14); 
+}
+
+.group-jumbo {
+    background-image: url('group-bg.png');
+    background-size: cover;
+    box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.7);
+    color: black;
+    border: none;
+}
+
+.btn-enter {
+    font-size: 1.75em;
+    margin-top: -33px;
+}
+
+.game-buttons {
+    margin-top: -10px;
+}
+
+.game-buttons .btn-secondary {
+    background-color: #bbb;
+    border: none;
+}

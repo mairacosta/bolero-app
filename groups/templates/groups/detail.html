@@ -1,5 +1,57 @@
 {% extends "base.html" %}
+{% load bootstrap5 %}
 
 {% block content %}
-<h3>{{ group }}</h3>
+<div class='p-5 mb-4 bg-light rounded-3 group-jumbo'>
+    <h3 class='display-5 fw-bold'>{{ group }}</h3>
+    <h6>{{ group.code }}</h6>
+    {% for player in group.players.all %}
+        {% if user_player == player %}
+        <span class="badge bg-primary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
+        {% else %}
+        <span class="badge bg-secondary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
+        {% endif %}
+    {% endfor %}
+    <div class='float-end'>
+        {% if player_in_group %}
+        <a href='{% url "game-create" group.code %}' class='btn btn-primary' type='submit'>Criar jogo</a>
+        {% endif %}
+        {% if player_in_group %}
+        <a href='{% url "group-unsubscribe" group.code %}' class='btn btn-warning' type='submit'>Sair do grupo</a>
+        {% else %}
+        <a href='{% url "group-subscribe" group.code %}' class='btn btn-success' type='submit'>Entrar do grupo</a>
+        {% endif %}
+    </div>
+</div>
+{% if player_in_group and games %}
+<h4>Jogos</h4>
+<div class='row'>
+    {% for game in games %}
+    <div class='col col-md-6 col-lg-4'>
+        <div class="bg-gradient bg-game rounded-3 p-3">
+            <small>{{ game.date_time }}</small>
+            <h3>{{ game.name }}</h3>
+            <hr>
+            <p><strong>Local: </strong>{{ game.local }}</p>
+            <p><strong>Jogadores / máximo: </strong>{{ game.players.count }} / {{ game.max_players }}</p>
+            {% for player in game.players.all %}
+                {% if user_player == player %}
+                <span class="badge bg-primary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
+                {% else %}
+                <span class="badge bg-secondary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
+                {% endif %}
+            {% endfor %}
+            
+            <div class='float-end game-buttons'>
+                {% if user_player in game.players.all %}
+                <a href='{% url "game-unsubscribe" group.code game.id %}'class='btn btn-secondary' type='submit'>Sair</a>
+                {% else %}
+                <a href='{% url "game-subscribe" group.code game.id %}'class='btn btn-primary' type='submit'>Entrar</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}
