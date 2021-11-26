@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from games.models import Game
 from groups.forms import GroupCreateForm
 from players.services import get_player
-from .services import create_group, get_player_groups, player_has_permission, subscribe_player_in_group, unsubscribe_player_in_group
+from .services import create_group, delete_group, get_group, get_player_groups, player_has_permission, subscribe_player_in_group, unsubscribe_player_in_group
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -39,6 +39,44 @@ def create(request):
     return render(request, "groups/create.html", {
         'form': form, 'group': group
     })
+
+@login_required
+def edit(request, code):
+    group = get_group(code)
+    if not group:
+        messages.error(request, 'Grupo não encontrado.')
+        return redirect(reverse('groups'))
+    elif group.admin.user != request.user:
+        messages.error(request, 'Usuário não tem permissão.')
+        return redirect(reverse('groups'))
+
+    if request.method == 'POST':
+        form = GroupCreateForm(data=request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Grupo {group} atualizado.')
+            return redirect(reverse('group-detail', args=[group.code]))
+        else:
+            messages.error(request, f'Dados inválidos: {form.errors}')
+    else:
+        form = GroupCreateForm(instance=group)
+    return render(request, "groups/create.html", {
+        'form': form, 'group': group
+    })
+
+@login_required
+def remove(request, code):
+    group = get_group(code)
+    if not group:
+        messages.error(request, 'Grupo não encontrado.')
+        return redirect(reverse('groups'))
+    elif group.admin.user != request.user:
+        messages.error(request, 'Usuário não tem permissão.')
+        return redirect(reverse('groups'))
+
+    delete_group(group)
+    messages.success(request, f'Grupo {group} removido com sucesso!')
+    return redirect(reverse('groups'))
 
 @login_required
 def detail(request, code):

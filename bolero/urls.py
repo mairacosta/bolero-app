@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('groups/', include('groups.urls')),
     path('games/', include('games.urls')),
-    path('login/', LoginView.as_view()),
-    path('logout/', logout_then_login, name='logout')
+    path('players/', include('players.urls')),
+    path('login', LoginView.as_view(), name='login'),
+    path('logout', logout_then_login, name='logout')
 ]

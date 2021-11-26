@@ -31,3 +31,9 @@ def subscribe_player_in_group(group, player):
 
 def unsubscribe_player_in_group(group, player):
     group.players.remove(player)
+
+def get_group(code):
+    return Group.objects.filter(code=code).first()
+
+def delete_group(group):
+    Group.objects.filter(id=group.id).delete()

@@ -15,9 +15,11 @@
     <div class='float-end'>
         {% if player_in_group %}
         <a href='{% url "game-create" group.code %}' class='btn btn-primary' type='submit'>Criar jogo</a>
-        {% endif %}
-        {% if player_in_group %}
-        <a href='{% url "group-unsubscribe" group.code %}' class='btn btn-warning' type='submit'>Sair do grupo</a>
+            {% if user_player == group.admin %}
+            <a href='{% url "group-edit" group.code %}' class='btn btn-secondary' title='editar'>Editar</a>
+            <a href='{% url "group-remove" group.code %}' class='btn btn-danger' title='editar'>Remover grupo</a>
+            {% endif %}
+        <a href='{% url "group-unsubscribe" group.code %}' class='btn btn-danger' type='submit'>Sair do grupo</a>
         {% else %}
         <a href='{% url "group-subscribe" group.code %}' class='btn btn-success' type='submit'>Entrar do grupo</a>
         {% endif %}

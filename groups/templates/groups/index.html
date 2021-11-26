@@ -15,22 +15,9 @@
 {% if group_found %}
 <h3>Grupo encontrado</h3>
 <div class="row mb-5">
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-body">
-            <h4 class="card-title">{{ group_found.name }}</h4>
-            <p><small>{{ group_found.code }}</small></p>
-            <p>
-                {% for player in group_found.players.all %}
-                <span class="badge bg-secondary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
-                {% endfor %}
-            </p>
-            <div class='float-end'>
-                <a href='{% url "group-detail" group_found.code %}' class="btn">Acessar página</a>
-            </div>
-            </div>
-        </div>
-    </div>
+  {% with group=group_found %}
+    {% include 'groups/group.html' %}
+  {% endwith %}
 </div>
 {% endif %}
 
@@ -38,26 +25,7 @@
 
 <div class="row">
     {% for group in groups %}
-    <div class="col-sm-6">
-    
-      <div class="card group-jumbo">
-        <div class="card-body">
-          <h4 class="card-title">{{ group.name }}</h4>
-          <p><small>{{ group.code }}</small></p>
-          <p>
-            {% for player in group.players.all %}
-            <span class="badge bg-secondary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
-            {% endfor %}
-          </p>
-          <div class='float-end'>
-            <a href='{% url "group-detail" group.code %}' class="btn btn-enter">
-                <i class="bi bi-box-arrow-in-right"></i>
-            </a>
-          </div>
-         </div>
-      </div>
-    
-    </div>
+      {% include 'groups/group.html' %}
     {% endfor %}
   </div>
 {% endblock %}
