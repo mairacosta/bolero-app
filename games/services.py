@@ -8,6 +8,9 @@ def create_game(cleaned_data, user, group):
     game.players.add(get_player(user))
     return game
 
+def can_player_subscribe(game):
+    return game.max_players > game.players.count()
+
 def subscribe_player(game, player):
     game.players.add(player)
 

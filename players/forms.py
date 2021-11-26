@@ -10,4 +10,7 @@ class PlayerCreateForm(UserCreationForm):
         user = super().save()
         player = get_player(user)
         return player
-        
+
+
+class PlayerForm(UserCreationForm):
+    pass

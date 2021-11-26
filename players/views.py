@@ -6,7 +6,9 @@ from django.contrib import messages
 from django.contrib.auth import views
 from django.urls.base import reverse
 
-from players.forms import PlayerCreateForm
+from players.forms import PlayerCreateForm, PlayerForm
+from players.models import Player
+from players.services import delete_player, get_player, update_player
 
 
 class LoginView(views.LoginView):
@@ -27,3 +29,28 @@ def create_player(request):
     return render(request, "players/create.html", {
         'form': form
     })
+
+@login_required
+def edit(request):
+    player = get_player(request.user)
+
+    if request.method == 'POST':
+        form = PlayerForm(data=request.POST, instance=player.user)
+        if form.is_valid():
+            update_player(player, form.cleaned_data)
+            messages.success(request, f'Jogador {player} atualizado.')
+            return redirect(reverse('groups'))
+        else:
+            messages.error(request, f'Dados inválidos: {form.errors}')
+    else:
+        form = PlayerForm(instance=player.user)
+    return render(request, "players/edit.html", {
+        'form': form, 'player': player
+    })
+
+@login_required
+def remove(request):
+    player = get_player(request.user)   
+    delete_player(player)
+    messages.success(request, f'Jogador {player} removido com sucesso!')
+    return redirect(reverse('groups'))

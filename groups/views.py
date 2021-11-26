@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from games.models import Game
 from groups.forms import GroupCreateForm
 from players.services import get_player
-from .services import create_group, delete_group, get_group, get_player_groups, player_has_permission, subscribe_player_in_group, unsubscribe_player_in_group
+from .services import create_group, delete_group, get_group, get_player_groups, player_has_permission, set_admin, subscribe_player_in_group, unsubscribe_player_in_group
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -20,7 +20,7 @@ def index(request):
         group_found = None
     groups = get_player_groups(request.user)
     return render(request, "groups/index.html", {
-        'groups': groups, 'group_found': group_found
+        'groups': groups, 'group_found': group_found, 'code': code
     })
 
 @login_required
@@ -119,4 +119,17 @@ def unsubscribe(request, code):
     else:
         messages.warning(request, f'Jogador não está inscrito neste grupo.')
             
+    return redirect(reverse('group-detail', args=[code]))
+
+@login_required
+def claim_admin(request, code):
+    group = get_object_or_404(Group, code=code)
+    player = get_player(request.user)
+
+    if player_has_permission(group, player):
+        set_admin(group, player)
+        messages.warning(request, f'Jogagor {player} se tornou admin do grupo {group}')
+    else:
+        messages.warning(request, f'Jogador não está inscrito neste grupo.')
+
     return redirect(reverse('group-detail', args=[code]))

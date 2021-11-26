@@ -9,4 +9,5 @@ urlpatterns = [
     path('<code>/remove', views.remove, name='group-remove'),
     path('<code>/subscribe', views.subscribe, name='group-subscribe'),
     path('<code>/unsubscribe', views.unsubscribe, name='group-unsubscribe'),
+    path('<code>/claim-admin', views.claim_admin, name='group-claim-admin'),
 ]

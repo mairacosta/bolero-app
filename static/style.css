@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Lobster&display=swap');
+
 .header-name {
     line-height: 30px;
 }
@@ -70,4 +72,18 @@
 .game-buttons .btn-secondary {
     background-color: #bbb;
     border: none;
+}
+
+.logo {
+    margin-top: -23px;
+    margin-bottom: -20px;
+    
+}
+
+.logo-font {
+    font-family: 'Lobster', cursive;
+}
+
+.group-search-message {
+    color: red;
 }

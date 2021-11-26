@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.urls.base import reverse
 from games.models import Game
-from games.services import create_game, delete_game, get_game, subscribe_player, unsubscribe_player
+from games.services import can_player_subscribe, create_game, delete_game, get_game, subscribe_player, unsubscribe_player
 
 from groups.models import Group
 from groups.services import player_has_permission
@@ -76,8 +76,11 @@ def subscribe(request, code, game_id):
     player = get_player(request.user)
     
     if player_has_permission(group, player):
-        subscribe_player(game, player)
-        messages.success(request, f'Jogagor {player} se inscreveu no jogo {game}')
+        if can_player_subscribe(game):
+            subscribe_player(game, player)
+            messages.success(request, f'Jogagor {player} se inscreveu no jogo {game}')
+        else:
+            messages.error(request, f'O jogo já está cheio!')
     else:
         messages.warning(request, f'É necessário fazer parte do grupo para entrar neste jogo!')
             

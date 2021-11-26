@@ -5,7 +5,19 @@
 <div class='p-5 mb-4 bg-light rounded-3 group-jumbo'>
     <h3 class='display-5 fw-bold'>{{ group }}</h3>
     <h6>{{ group.code }}</h6>
-    <p><strong>Admin: </strong><span class="badge bg-success"><i class="bi bi-person-fill"></i> {{ group.admin.user }}</span></p>
+    <p>
+        <strong>Admin: </strong>
+        {% if group.admin.user %}
+        <span class="badge bg-success">
+            <i class="bi bi-person-fill"></i>
+            {{ group.admin.user }}
+        </span>
+        {% else %}
+        <a href='{% url "group-claim-admin" group.code %}' class='btn btn-success btn-sm'>
+            Reivindicar
+        </a>
+        {% endif %}
+    </p>
     <p><strong>Jogadores: </strong>
     {% for player in group.players.all %}
         {% if user_player == player %}
@@ -17,7 +29,7 @@
     </p>
     <div class='float-end'>
         {% if player_in_group %}
-        <a href='{% url "game-create" group.code %}' class='btn btn-primary' type='submit' title='criar novo jogo'>
+        <a href='{% url "game-create" group.code %}' class='btn btn-primary' title='criar novo jogo'>
             Criar jogo <i class="bi bi-plus-lg"></i> 
         </a>
             {% if user_player == group.admin %}
@@ -28,11 +40,11 @@
                 <i class="bi bi-trash-fill"></i>
             </a>
             {% endif %}
-        <a href='{% url "group-unsubscribe" group.code %}' class='btn btn-danger' type='submit' title='sair do grupo'>
+        <a href='{% url "group-unsubscribe" group.code %}' class='btn btn-danger' title='sair do grupo'>
             <i class="bi bi-box-arrow-down-left"></i>
         </a>
         {% else %}
-        <a href='{% url "group-subscribe" group.code %}' class='btn btn-success' type='submit'>
+        <a href='{% url "group-subscribe" group.code %}' class='btn btn-success'>
             Entrar no grupo <i class="bi bi-box-arrow-in-up-right"></i>
         </a>
         {% endif %}

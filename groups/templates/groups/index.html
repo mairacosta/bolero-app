@@ -12,6 +12,11 @@
     </div>
 </form>
 
+{% if code and not group_found %}
+<h6 class="group-search-message">Grupo {{code}} não encontrado</h6>
+<hr>
+{% endif %}
+
 {% if group_found %}
 <h3>Grupo encontrado</h3>
 <div class="row mb-5">
@@ -21,11 +26,13 @@
 </div>
 {% endif %}
 
+{% if groups %}
 <h3 class="mb-3">Meus grupos</h3>
 
 <div class="row">
     {% for group in groups %}
       {% include 'groups/group.html' %}
     {% endfor %}
-  </div>
+</div>
+{% endif %}
 {% endblock %}

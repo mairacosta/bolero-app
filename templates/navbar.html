@@ -1,6 +1,10 @@
+{% load static %}
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Bolêro</a>
+        <a class="navbar-brand logo-font" href="/">
+            Bolêro 
+            <img src="{% static 'logo.png' %}" alt="" width="50" height="50" class="logo">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,9 +17,19 @@
             <form class="d-flex">
                 <h5 class="header-name"><span class="badge">{{request.user}}</span></h5>
 
-                <a class="btn btn-success btn-outline-light me-2" href="{% url 'group-create' %}">Criar grupo</a>
-                <a class="btn btn-outline-light me-2" href="{% url 'logout' %}">Sair</a>
+                <a class="btn btn-success btn-outline-light me-2" href="{% url 'group-create' %}" title='criar novo grupo'>
+                    Criar grupo <i class="bi bi-plus-lg"></i>
+                </a>
+                <a class="btn btn-outline-light btn-outline-light me-2" href="{% url 'player-edit' %}" title='editar dados'>
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+                <a class="btn btn-outline-light btn-danger me-2" href="{% url 'player-remove' %}" title='deletar conta'>
+                    <i class="bi bi-trash-fill"></i>
+                </a>
+                <a class="btn btn-outline-light btn-danger me-2" href="{% url 'logout' %}" title='sair da conta'>
+                    <i class="bi bi-box-arrow-down-left"></i>
+                </a>
             </form>
         </div>
     </div>
-    </nav>
+</nav>
