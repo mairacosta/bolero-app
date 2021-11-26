@@ -13,3 +13,9 @@ def subscribe_player(game, player):
 
 def unsubscribe_player(game, player):
     game.players.remove(player)
+
+def get_game(group, id):
+    return Game.objects.filter(group=group, id=id).first()
+
+def delete_game(game):
+    Game.objects.filter(id=game.id).delete()

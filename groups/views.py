@@ -60,7 +60,7 @@ def edit(request, code):
             messages.error(request, f'Dados inválidos: {form.errors}')
     else:
         form = GroupCreateForm(instance=group)
-    return render(request, "groups/create.html", {
+    return render(request, "groups/edit.html", {
         'form': form, 'group': group
     })
 

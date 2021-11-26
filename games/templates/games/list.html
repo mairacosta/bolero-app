@@ -1,0 +1,41 @@
+{% if player_in_group and games %}
+<h4>Jogos</h4>
+<div class='row'>
+    {% for game in games %}
+    <div class='col col-md-6 col-lg-4'>
+        <div class="bg-gradient bg-game rounded-3 p-3">
+            <small>{{ game.date_time }}</small>
+            <h3>{{ game.name }}</h3>
+            <hr>
+            <p><strong>Local: </strong>{{ game.local }}</p>
+            <p><strong>Jogadores/máximo: </strong>{{ game.players.count }}/{{ game.max_players }}</p>
+            {% for player in game.players.all %}
+                {% if user_player == player %}
+                <span class="badge bg-primary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
+                {% else %}
+                <span class="badge bg-secondary"><i class="bi bi-person-fill"></i> {{ player.user }}</span>
+                {% endif %}
+            {% endfor %}
+            
+            <div class='float-end game-buttons'>
+                <a href='{% url "game-edit" group.code game.id%}' class='btn btn-secondary' title='editar jogo'>
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+                <a href='{% url "game-remove" group.code game.id %}' class='btn btn-danger' title='deletar jogo'>
+                    <i class="bi bi-trash-fill"></i>
+                </a>
+                {% if user_player in game.players.all %}
+                <a href='{% url "game-unsubscribe" group.code game.id %}'class='btn btn-secondary' title='sair do jogo'>
+                    Sair <i class="bi bi-box-arrow-down-left"></i>
+                </a>
+                {% else %}
+                <a href='{% url "game-subscribe" group.code game.id %}'class='btn btn-primary' title='entrar no jogo'>
+                    Entrar <i class="bi bi-box-arrow-in-up-right"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
